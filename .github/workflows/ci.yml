@@ -15,17 +15,12 @@ jobs:
         with:
           path: ~/.stack
           key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml.lock') }}-${{ hashFiles('**/package.yaml') }}
-      - uses: actions/setup-haskell@v1.1
+      - uses: actions/setup-haskell@v1.1.2
         with:
           ghc-version: "8.8.3"
-          enable-stack: true
-          stack-no-global: true
           stack-version: "latest"
-      - run: stack build
-      - if: matrix.os  == 'macos-latest'
-        name: Fix mac-os exit 126 on CI
-        run: chmod -v -R +x .stack/setup-exe-cache/**/*
-      - run: stack build
-      - run: stack test
+          enable-stack: true
+      - run: stack --system-ghc build
+      - run: stack --system-ghc test
       - name: Run with --version
-        run: stack run -- --version
+        run: stack run --system-ghc -- --version
