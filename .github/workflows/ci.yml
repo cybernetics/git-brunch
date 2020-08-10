@@ -21,12 +21,11 @@ jobs:
           enable-stack: true
           stack-no-global: true
           stack-version: "latest"
-      - if:  matrix.os  == 'macos-latest'
+      - run: stack build
+      - if: matrix.os  == 'macos-latest'
         name: Fix mac-os exit 126 on CI
         run: chmod -v -R +x .stack/setup-exe-cache/**/*
-      - name: Build
-        run: stack build
-      - name: Run tests
-        run: stack test
+      - run: stack build
+      - run: stack test
       - name: Run with --version
         run: stack run -- --version
