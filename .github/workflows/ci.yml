@@ -15,9 +15,12 @@ jobs:
         with:
           path: ~/.stack
           key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml.lock') }}-${{ hashFiles('**/package.yaml') }}
-      - if: matrix.os  == 'macos-latest'
-        name: Install stack
-        run: brew install haskell-stack
+      - uses: actions/setup-haskell@v1.1.2
+        with:
+          ghc-version: "8.8"
+          stack-version: "latest"
+          enable-stack: true
+          stack-setup-ghc: true
       - run: stack --system-ghc build
       - run: stack --system-ghc test
       - name: Run with --version
