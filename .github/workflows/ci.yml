@@ -10,17 +10,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - if:  matrix.os  == 'ubuntu-latest'
+        uses: actions/cache@v2
         name: Cache ~/.stack
         with:
           path: ~/.stack
           key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml.lock') }}-${{ hashFiles('**/package.yaml') }}
-      - uses: actions/setup-haskell@2215b2cb657e9dd555e7d634509d859983e7aa1e
+      - uses: actions/setup-haskell@v1.1.2
         with:
-          ghc-version: "8.8.4"
-          stack-version: "latest"
           enable-stack: true
-      - run: stack --system-ghc build
-      - run: stack --system-ghc test
+          stack-version: "latest"
+          ghc-version: "8.8.3"
+      - run: stack build
+      - run: stack test
       - name: Run with --version
-        run: stack --system-ghc run -- --version
+        run: stack run -- --version
