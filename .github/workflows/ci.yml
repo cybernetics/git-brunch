@@ -15,15 +15,10 @@ jobs:
         with:
           path: ~/.stack
           key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml.lock') }}-${{ hashFiles('**/package.yaml') }}
-      - uses: actions/setup-haskell@v1.1.2
-        with:
-          stack-version: "latest"
-          enable-stack: true
-          stack-no-global: true
-      - run: stack setup
       - if:  matrix.os  == 'macos-latest'
-        name: Fix error 126 for mac-os
-        run: chmod -v -R +x ~/.stack/setup-exe-cache/**/*
+        name: Setup stack
+        uses: mstksg/setup-stack@v2
+      - run: stack setup
       - name: Build
         run: stack build
       - name: Test
