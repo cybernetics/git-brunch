@@ -22,6 +22,7 @@ jobs:
           enable-stack: true
           stack-setup-ghc: true
           stack-no-global: true
+      - run: ls -al ~/.stack/setup-exe-cache/x86_64-osx/
       - run: stack build
       - run: stack test
       - name: Run with --version
