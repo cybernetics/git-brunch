@@ -12,7 +12,7 @@ extra-source-files:
 synopsis: git checkout command-line tool
 category: Git
 
-description: Please see the README on GitHub at <https://github.com/andys8/git-brunch#readme>
+description: Please see the README on GitHub at <https://github.com/andys8/git-brunch>
 
 dependencies:
   - base >= 4.7 && < 5
