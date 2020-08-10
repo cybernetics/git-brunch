@@ -21,7 +21,8 @@ jobs:
           stack-version: "latest"
           enable-stack: true
           stack-setup-ghc: true
-      - run: stack --system-ghc build
-      - run: stack --system-ghc test
+          stack-no-global: true
+      - run: stack build
+      - run: stack test
       - name: Run with --version
-        run: stack --system-ghc run -- --version
+        run: stack run -- --version
